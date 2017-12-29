@@ -6,19 +6,14 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://w12379564.github.io">
-  <title>POJ 1182 食物链(并查集) | 未来机械研究所</title>
+  <title>Tag: 双向BFS | 未来机械研究所</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="A吃B，B吃C，C吃A，可以用权值的大小关系来表示吃，如果一个元素X的权值大于另一个元素Y，则表示X吃Y，权重相等表示两者同类，只利用大小关系的话，大1就可以了，于是可以设定A比B大1，B比C大1，C比A大1.">
-<meta name="keywords" content="并查集">
-<meta property="og:type" content="article">
-<meta property="og:title" content="POJ 1182 食物链(并查集)">
-<meta property="og:url" content="https://w12379564.github.io/2017/12/29/POJ-1182-食物链-并查集/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="未来机械研究所">
+<meta property="og:url" content="https://w12379564.github.io/tags/双向BFS/index.html">
 <meta property="og:site_name" content="未来机械研究所">
-<meta property="og:description" content="A吃B，B吃C，C吃A，可以用权值的大小关系来表示吃，如果一个元素X的权值大于另一个元素Y，则表示X吃Y，权重相等表示两者同类，只利用大小关系的话，大1就可以了，于是可以设定A比B大1，B比C大1，C比A大1.">
-<meta property="og:updated_time" content="2017-12-29T11:06:43.204Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="POJ 1182 食物链(并查集)">
-<meta name="twitter:description" content="A吃B，B吃C，C吃A，可以用权值的大小关系来表示吃，如果一个元素X的权值大于另一个元素Y，则表示X吃Y，权重相等表示两者同类，只利用大小关系的话，大1就可以了，于是可以设定A比B大1，B比C大1，C比A大1.">
+<meta name="twitter:title" content="未来机械研究所">
   
     <link rel="alternative" href="/atom.xml" title="未来机械研究所" type="application/atom+xml">
   
@@ -154,165 +149,72 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-POJ-1182-食物链-并查集" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      POJ 1182 食物链(并查集)
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/12/29/HDU-1043-Eight-BFS/" class="archive-article-date">
+  	<time datetime="2017-12-29T11:26:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-29</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/12/29/HDU-1043-Eight-BFS/">HDU 1043 Eight(搜索，多解)</a>
     </h1>
   
 
-        
-        <a href="/2017/12/29/POJ-1182-食物链-并查集/" class="archive-article-date">
-  	<time datetime="2017-12-29T10:55:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>A吃B，B吃C，C吃A，可以用权值的大小关系来表示吃，如果一个元素X的权值大于另一个元素Y，则表示X吃Y，权重相等表示两者同类，只利用大小关系的话，大1就可以了，于是可以设定A比B大1，B比C大1，C比A大1.<br><a id="more"></a><br>此即本题的特殊之处，有一种循环关系，而数字大小本身不具备这样的循环关系，而联想到取模操作可以造成循环，因此设定如下，A=1,B=0,C=2，因此相当于0比2大1，即2其实是-1，这样就能看出是以3作为循环周期，先使用正常的大小关系求权重，然后使用+3和模3操作来回到正常区间。</p>
-<p>例如某个元素X权重为0，X吃Y，则Y比X小1即为-1，(-1+3)%3=2，则Y的权重为2.</p>
-<p>同一个并查集中权重有统一参考，因此同一集合中的元素关系可以通过比较权值得到。</p>
-<p>合并两个集合，将其中一个的根节点接到另一个上，并求原根节点的新权重。具体见带权并查集概述</p>
-<p>因此，对于本题，读取输入，检查是否在同一集合，<br>1.如果在，那么如果输入是同类，那么两者的值应相等，若val[x]!=val[y]，则计数+1<br>如果输入是吃的关系，那么val[x]应等于val[y]+1模3，因为val不会是负的，最大为2，因此只可能上越界，不用+3，直接模3即可，如果不等于，那么计数+1</p>
-<p>2.如果两者不在统一集合，那么归并两个集合<br>将y的根yy接到xx上，求val[yy]，则按《带权并查集概述》中，有val[yy]=val[x]+D(x,y)-val[y]<br>D(x,y)表示x和y的关系，关系是做差，若x和y同类，则D(x,y)=0,若x吃y，则根据前面的设定，则x比y大1，D(x,y)=-1. 同时注意可能的越界情况，可能的最小值-3，最大值4，则+3模3保证取值范围合法。</p>
-<p>注意到正数的话取模总是可以回到对应区间，所有关注负数就行。</p>
-<p>当检测到违背时即为假，计数+1，输出计数值</p>
-<p>坑点：<br>只能单组输入不能用while，不然WA，不知为何<br>记得计数值初始化（scanf），神TM不记得读k导致k为随机值然后超时，神tm在本地还能跑过</p>
-<p>复杂度：<br>空间pre,val数组O(N)<br>时间：使用路径压缩 那么均摊的find union都是O(1)，则时间为O(K)</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;memory.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> pre[<span class="number">50005</span>];</span><br><span class="line"><span class="keyword">int</span> val[<span class="number">50005</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">myfind</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(pre[x]==<span class="number">-1</span>) <span class="keyword">return</span> x;</span><br><span class="line">    <span class="keyword">int</span> p=pre[x];</span><br><span class="line">    pre[x]=myfind(p);</span><br><span class="line">    val[x]=(val[p]+val[x])%<span class="number">3</span>;</span><br><span class="line">    <span class="keyword">return</span> pre[x];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> LOCAL</span></span><br><span class="line">    freopen(<span class="string">"data.in"</span>,<span class="string">"r"</span>,<span class="built_in">stdin</span>);</span><br><span class="line">    freopen(<span class="string">"data.out"</span>,<span class="string">"w"</span>,<span class="built_in">stdout</span>);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> N,K;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;N,&amp;K);</span><br><span class="line">    <span class="built_in">memset</span>(pre,<span class="number">-1</span>,<span class="keyword">sizeof</span> pre);</span><br><span class="line">    <span class="built_in">memset</span>(val,<span class="number">0</span>,<span class="keyword">sizeof</span> val);</span><br><span class="line">    <span class="keyword">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> D,x,y;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;K;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d%d"</span>,&amp;D,&amp;x,&amp;y);</span><br><span class="line">        <span class="keyword">if</span>(x&gt;N||y&gt;N)</span><br><span class="line">        &#123;</span><br><span class="line">            cnt++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> xx=myfind(x);</span><br><span class="line">            <span class="keyword">int</span> yy=myfind(y);</span><br><span class="line">            <span class="keyword">if</span>(xx!=yy)</span><br><span class="line">            &#123;</span><br><span class="line">                pre[yy]=xx;</span><br><span class="line">                <span class="keyword">if</span>(D==<span class="number">1</span>) val[yy]=(val[x]-val[y]+<span class="number">3</span>)%<span class="number">3</span>;</span><br><span class="line">                <span class="keyword">else</span> val[yy]=(val[x]-val[y]<span class="number">-1</span>+<span class="number">3</span>)%<span class="number">3</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(D==<span class="number">1</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span>(val[x]!=val[y]) cnt++;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span>(val[x]!=((val[y]+<span class="number">1</span>)%<span class="number">3</span>)) cnt++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,cnt);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">并查集</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">BFS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">康托展开</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">双向BFS</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">A*</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://w12379564.github.io/2017/12/29/POJ-1182-食物链-并查集/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2017/12/29/POJ-2912-Rochambeau-并查集-枚举/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          POJ 2912 Rochambeau(并查集+枚举)
-        
-      </div>
-    </a>
   
   
-    <a href="/2017/12/07/POJ-1417-True-Liars-并查集-DP/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">POJ 1417 True Liars(并查集+DP)</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -335,9 +237,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
