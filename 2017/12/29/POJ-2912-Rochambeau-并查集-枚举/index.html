@@ -6,14 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://w12379564.github.io">
-  <title>Archives: 2017 | 未来机械研究所</title>
+  <title>POJ 2912 Rochambeau(并查集+枚举) | 未来机械研究所</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="未来机械研究所">
-<meta property="og:url" content="https://w12379564.github.io/archives/2017/index.html">
+  <meta name="description" content="构造并查集权的关系和食物链一样，带有循环关系的并查集构造方式应该都类似，利用取值大小表示关系，利用取模实现循环比较。">
+<meta name="keywords" content="并查集,枚举">
+<meta property="og:type" content="article">
+<meta property="og:title" content="POJ 2912 Rochambeau(并查集+枚举)">
+<meta property="og:url" content="https://w12379564.github.io/2017/12/29/POJ-2912-Rochambeau-并查集-枚举/index.html">
 <meta property="og:site_name" content="未来机械研究所">
+<meta property="og:description" content="构造并查集权的关系和食物链一样，带有循环关系的并查集构造方式应该都类似，利用取值大小表示关系，利用取模实现循环比较。">
+<meta property="og:updated_time" content="2017-12-29T11:14:04.647Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="未来机械研究所">
+<meta name="twitter:title" content="POJ 2912 Rochambeau(并查集+枚举)">
+<meta name="twitter:description" content="构造并查集权的关系和食物链一样，带有循环关系的并查集构造方式应该都类似，利用取值大小表示关系，利用取模实现循环比较。">
   
     <link rel="alternative" href="/atom.xml" title="未来机械研究所" type="application/atom+xml">
   
@@ -149,36 +154,43 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-POJ-2912-Rochambeau-并查集-枚举" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/29/POJ-2912-Rochambeau-并查集-枚举/" class="archive-article-date">
-  	<time datetime="2017-12-29T11:09:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-29</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/29/POJ-2912-Rochambeau-并查集-枚举/">POJ 2912 Rochambeau(并查集+枚举)</a>
+    <h1 class="article-title" itemprop="name">
+      POJ 2912 Rochambeau(并查集+枚举)
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/12/29/POJ-2912-Rochambeau-并查集-枚举/" class="archive-article-date">
+  	<time datetime="2017-12-29T11:09:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>构造并查集权的关系和食物链一样，带有循环关系的并查集构造方式应该都类似，利用取值大小表示关系，利用取模实现循环比较。<br><a id="more"></a><br>对于裁判，裁判与其他人的关系可以是任意的，因此裁判的关系加入会破坏并查集内部的联系关系，并查集这个结构本身没有足够的信息能够判断保存的关系和要新增的关系哪个合法，如果当前得到的新关系与已有关系产生矛盾，之前的类似题目均采用认为已有关系正确而新增关系错误的方式。而在本题中，裁判的行为可能会带来关系矛盾，并且会导致无法建立正确的关系，而解决办法就是不要将裁判的关系加入集合。</p>
+<p>但是又不知道裁判是谁，这个需求如何实现？</p>
+<p>从题目中可以看到，人数N最大500，因此可以枚举每一个人作为裁判，不加入集合，分析剩余元素的关系情况。</p>
+<p>理论上，只有裁判会带来关系矛盾，其他所有元素之间都不应有矛盾，因此，判断一个人是裁判的<strong>必要</strong>条件是当移除了这个人的关系，剩下的人之间关系均没有矛盾。这个条件仅仅是必要的，这是因为如果某个case中，裁判的行为永远只相当于其中一方（即整个集合都没有矛盾），亦或者裁判的行为只与其中一个人有矛盾，例如裁判是a,另一个人是b，整个集合中只有a&gt;b,a&lt;b矛盾，这样移除a，剩下的集合没有矛盾，移除b，剩下的集合也没有矛盾，因此这个条件只是必要的。</p>
+<p>那如何才是充分的呢？在明确已知有且只有一个裁判的情况下，如果枚举全部人作为裁判，只有一个人移除了之后使得剩余元素没有矛盾，而移除其他人都不行，这样就能唯一确定一人为裁判。</p>
+<p>从上述分析可以总结，要能够判断哪一个是裁判，分别枚举所有人当裁判，判断剩下集合中是否有矛盾，统计没有矛盾的情况个数，若恰好为1个，则能找到裁判，若大于1个，则不能确定是哪一个人，若为0个，则意味着有超过1个的裁判，这是不可能的。</p>
+<p>如果能找出裁判，本题还需输出最少在第几个条件时就能得出结论，则根据上述判断方法，即为枚举每个人时，只有一个人对应的剩余集合没有矛盾，对于每个有矛盾的集合，记录找到矛盾的最早的条件位置，对于所有这些位置，取最大值</p>
+<p>由于需要枚举每个人，因此对于给出的关系肯定要存下来然后离线查询，既然已经存下来了，一旦找到矛盾就可以break，在线读入时不能break是因为即使找到了下面的输入也要读完，而离线就不存在这个问题，break可以省一半的时间。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;memory.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> pre[<span class="number">505</span>];</span><br><span class="line"><span class="keyword">int</span> val[<span class="number">505</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">myfind</span><span class="params">(<span class="keyword">int</span> x)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(pre[x]==<span class="number">-1</span>) <span class="keyword">return</span> x;</span><br><span class="line">    <span class="keyword">int</span> p=pre[x];</span><br><span class="line">    pre[x]=myfind(p);</span><br><span class="line">    val[x]=(val[x]+val[p])%<span class="number">3</span>;</span><br><span class="line">    <span class="keyword">return</span> pre[x];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> r[<span class="number">2005</span>][<span class="number">3</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> LOCAL</span></span><br><span class="line">    freopen(<span class="string">"data.in"</span>,<span class="string">"r"</span>,<span class="built_in">stdin</span>);</span><br><span class="line">    freopen(<span class="string">"data.out"</span>,<span class="string">"w"</span>,<span class="built_in">stdout</span>);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> N,M;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>,&amp;N,&amp;M)==<span class="number">2</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> l=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> ret=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> p,q,pq;</span><br><span class="line">        <span class="keyword">char</span> c;</span><br><span class="line">        <span class="built_in">memset</span>(r,<span class="number">0</span>,<span class="keyword">sizeof</span> r);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=M;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%d%c%d"</span>,&amp;p,&amp;c,&amp;q);</span><br><span class="line">            <span class="keyword">if</span>(c==<span class="string">'&gt;'</span>) pq=<span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(c==<span class="string">'&lt;'</span>) pq=<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span> pq=<span class="number">0</span>;</span><br><span class="line">            r[i][<span class="number">0</span>]=p;</span><br><span class="line">            r[i][<span class="number">1</span>]=pq;</span><br><span class="line">            r[i][<span class="number">2</span>]=q;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> n=<span class="number">0</span>;n&lt;N;n++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">memset</span>(pre,<span class="number">-1</span>,<span class="keyword">sizeof</span> pre);</span><br><span class="line">            <span class="built_in">memset</span>(val,<span class="number">0</span>,<span class="keyword">sizeof</span> val);</span><br><span class="line">            <span class="keyword">bool</span> f=<span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=M;i++)</span><br><span class="line">            &#123;</span><br><span class="line">                p=r[i][<span class="number">0</span>];</span><br><span class="line">                pq=r[i][<span class="number">1</span>];</span><br><span class="line">                q=r[i][<span class="number">2</span>];</span><br><span class="line">                <span class="keyword">if</span>(p==n||q==n) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">int</span> pp=myfind(p);</span><br><span class="line">                <span class="keyword">int</span> qq=myfind(q);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span>(pp!=qq)</span><br><span class="line">                &#123;</span><br><span class="line">                    pre[qq]=pp;</span><br><span class="line">                    val[qq]=(val[p]-val[q]+pq+<span class="number">3</span>)%<span class="number">3</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span>(val[q]!=((val[p]+pq+<span class="number">3</span>))%<span class="number">3</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">if</span>(f)</span><br><span class="line">                        &#123;</span><br><span class="line">                            f=<span class="literal">false</span>;</span><br><span class="line">                            l=max(l,i);</span><br><span class="line">                            <span class="keyword">break</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(f)</span><br><span class="line">            &#123;</span><br><span class="line">                ret=n;</span><br><span class="line">                cnt++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(cnt==<span class="number">0</span>) <span class="built_in">printf</span>(<span class="string">"Impossible\n"</span>);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(cnt&gt;<span class="number">1</span>) <span class="built_in">printf</span>(<span class="string">"Can not determine\n"</span>);</span><br><span class="line">        <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">"Player %d can be determined to be the judge after %d lines\n"</span>,ret,l);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -194,191 +206,106 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://w12379564.github.io/2017/12/29/POJ-2912-Rochambeau-并查集-枚举/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/29/POJ-1182-食物链-并查集/" class="archive-article-date">
-  	<time datetime="2017-12-29T10:55:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-29</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/12/29/POJ-1182-食物链-并查集/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">POJ 1182 食物链(并查集)</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/29/POJ-1182-食物链-并查集/">POJ 1182 食物链(并查集)</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">并查集</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/07/POJ-1417-True-Liars-并查集-DP/" class="archive-article-date">
-  	<time datetime="2017-12-07T13:11:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/07/POJ-1417-True-Liars-并查集-DP/">POJ 1417 True Liars(并查集+DP)</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">并查集</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">DP</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/07/带权并查集概述/" class="archive-article-date">
-  	<time datetime="2017-12-07T10:57:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/07/带权并查集概述/">带权并查集概述</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">并查集</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/06/wuha/" class="archive-article-date">
-  	<time datetime="2017-12-06T13:36:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/06/wuha/">wuha!</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/06/hello-world/" class="archive-article-date">
-  	<time datetime="2017-12-06T11:58:29.570Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/06/hello-world/">Hello World</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -401,8 +328,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
