@@ -6,19 +6,14 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://w12379564.github.io">
-  <title>HDU 3533 Escape(A*) | 未来机械研究所</title>
+  <title>Tag: IDA* | 未来机械研究所</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一开始MLE到怀疑人生，发现是vis开大了。bool只有1个字节，int有4个，因此用int来当布尔数组浪费了4倍内存，直接MLE了，因此标记能用bool一定要用bool。">
-<meta name="keywords" content="A*">
-<meta property="og:type" content="article">
-<meta property="og:title" content="HDU 3533 Escape(A*)">
-<meta property="og:url" content="https://w12379564.github.io/2017/12/30/HDU-3533-Escape-A/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="未来机械研究所">
+<meta property="og:url" content="https://w12379564.github.io/tags/IDA/index.html">
 <meta property="og:site_name" content="未来机械研究所">
-<meta property="og:description" content="一开始MLE到怀疑人生，发现是vis开大了。bool只有1个字节，int有4个，因此用int来当布尔数组浪费了4倍内存，直接MLE了，因此标记能用bool一定要用bool。">
-<meta property="og:updated_time" content="2017-12-30T09:01:28.339Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HDU 3533 Escape(A*)">
-<meta name="twitter:description" content="一开始MLE到怀疑人生，发现是vis开大了。bool只有1个字节，int有4个，因此用int来当布尔数组浪费了4倍内存，直接MLE了，因此标记能用bool一定要用bool。">
+<meta name="twitter:title" content="未来机械研究所">
   
     <link rel="alternative" href="/atom.xml" title="未来机械研究所" type="application/atom+xml">
   
@@ -154,159 +149,60 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-HDU-3533-Escape-A" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      HDU 3533 Escape(A*)
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2017" class="archive-year">2017</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2017/12/30/HDU-1560-DNA-sequence-IDA/" class="archive-article-date">
+  	<time datetime="2017-12-30T09:13:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-30</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2017/12/30/HDU-1560-DNA-sequence-IDA/">HDU 1560 DNA sequence(IDA*)</a>
     </h1>
   
 
-        
-        <a href="/2017/12/30/HDU-3533-Escape-A/" class="archive-article-date">
-  	<time datetime="2017-12-30T08:53:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>一开始MLE到怀疑人生，发现是vis开大了。<br>bool只有1个字节，int有4个，因此用int来当布尔数组浪费了4倍内存，直接MLE了，因此标记能用bool一定要用bool。<br><a id="more"></a></p>
-<p>坑点：炮台的位置是不能走的，不只是会0距离射击，而是那个位置根本不能去，题目没有表述清楚这一点。</p>
-<p>用A*很合适，h估计距离可以直接用曼哈顿距离，并且保证一定比实际距离小，能保证寻到最优解。注意A*算法能找到最优解的充要条件是估计距离h小于等于实际距离，否则只能找到路径，但不一定是最短路，只能称作A算法。本题中，由于曼哈顿距离是当前位置到终点的最短路径，而实际情况只可能比这个路径长，因此一定可以找到最短距离解。</p>
-<p>路线上是否有子弹的计算：寻找四周指向当前位置的炮台（并且注意到一个炮台能挡住后面的子弹），计算到达当前位置的t0时间，即距离dist/v，然后接下来就是周期t重复了，则看当前时间tt==t0+t*k是否成立，即(tt-t0)%t是否为0。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;memory.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> m,n,k,d;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">castle</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">char</span> c;</span><br><span class="line">    <span class="keyword">int</span> t,v;</span><br><span class="line">&#125; mp[<span class="number">105</span>][<span class="number">105</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">bool</span> vis[<span class="number">105</span>][<span class="number">105</span>][<span class="number">1005</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(vis,<span class="literal">false</span>,<span class="keyword">sizeof</span> vis);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=m;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;=n;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            mp[i][j].t=<span class="number">0</span>;</span><br><span class="line">            mp[i][j].v=<span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> g,h,x,y;</span><br><span class="line">    <span class="keyword">bool</span> <span class="keyword">operator</span>&lt;(<span class="keyword">const</span> node n1)<span class="keyword">const</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> (n1.g+n1.h)&lt;(g+h);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_h</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">abs</span>(x-m)+<span class="built_in">abs</span>(y-n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> dx[<span class="number">5</span>]=&#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">-1</span>,<span class="number">1</span>,<span class="number">0</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> dy[<span class="number">5</span>]=&#123;<span class="number">-1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">astar</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(mp[<span class="number">0</span>][<span class="number">0</span>].t!=<span class="number">0</span>) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    node e;</span><br><span class="line">    e.g=<span class="number">0</span>;</span><br><span class="line">    e.h=get_h(<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">    e.x=<span class="number">0</span>;</span><br><span class="line">    e.y=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    priority_queue&lt;node&gt; pq;</span><br><span class="line">    pq.push(e);</span><br><span class="line">    vis[<span class="number">0</span>][<span class="number">0</span>][<span class="number">0</span>]=<span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(!pq.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        node cur=pq.top();</span><br><span class="line">        pq.pop();</span><br><span class="line">        <span class="keyword">int</span> x=cur.x;</span><br><span class="line">        <span class="keyword">int</span> y=cur.y;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> xx=x+dx[i];</span><br><span class="line">            <span class="keyword">int</span> yy=y+dy[i];</span><br><span class="line">            <span class="keyword">if</span>(xx&lt;<span class="number">0</span>||xx&gt;m||yy&lt;<span class="number">0</span>||yy&gt;n) <span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">bool</span> flag=<span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">            node next=cur;</span><br><span class="line">            next.g++;</span><br><span class="line">            <span class="keyword">if</span>(vis[xx][yy][next.g]==<span class="literal">true</span>) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">if</span>(mp[xx][yy].t) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">if</span>(xx==m&amp;&amp;yy==n) <span class="keyword">return</span> next.g;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> cx=xx<span class="number">-1</span>;cx&gt;=<span class="number">0</span>;cx--)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(mp[cx][yy].t!=<span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">int</span> L=xx-cx;</span><br><span class="line">                    <span class="keyword">if</span>(mp[cx][yy].c==<span class="string">'S'</span>&amp;&amp;L%mp[cx][yy].v==<span class="number">0</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">int</span> t0=L/mp[cx][yy].v;</span><br><span class="line">                        <span class="keyword">int</span> dt=next.g-t0;</span><br><span class="line">                        <span class="keyword">if</span>(dt&gt;=<span class="number">0</span>&amp;&amp;(dt%mp[cx][yy].t==<span class="number">0</span>)) flag=<span class="literal">true</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> cx=xx+<span class="number">1</span>;cx&lt;=m;cx++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(mp[cx][yy].t!=<span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">int</span> L=cx-xx;</span><br><span class="line">                    <span class="keyword">if</span>(mp[cx][yy].c==<span class="string">'N'</span>&amp;&amp;L%mp[cx][yy].v==<span class="number">0</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">int</span> t0=L/mp[cx][yy].v;</span><br><span class="line">                        <span class="keyword">int</span> dt=next.g-t0;</span><br><span class="line">                        <span class="keyword">if</span>(dt&gt;=<span class="number">0</span>&amp;&amp;(dt%mp[cx][yy].t==<span class="number">0</span>)) flag=<span class="literal">true</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> cy=yy<span class="number">-1</span>;cy&gt;=<span class="number">0</span>;cy--)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(mp[xx][cy].t!=<span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">int</span> L=yy-cy;</span><br><span class="line">                    <span class="keyword">if</span>(mp[xx][cy].c==<span class="string">'E'</span>&amp;&amp;L%mp[xx][cy].v==<span class="number">0</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">int</span> t0=L/mp[xx][cy].v;</span><br><span class="line">                        <span class="keyword">int</span> dt=next.g-t0;</span><br><span class="line">                        <span class="keyword">if</span>(dt&gt;=<span class="number">0</span>&amp;&amp;(dt%mp[xx][cy].t==<span class="number">0</span>)) flag=<span class="literal">true</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> cy=yy+<span class="number">1</span>;cy&lt;=n;cy++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span>(mp[xx][cy].t!=<span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">int</span> L=cy-yy;</span><br><span class="line">                    <span class="keyword">if</span>(mp[xx][cy].c==<span class="string">'W'</span>&amp;&amp;L%mp[xx][cy].v==<span class="number">0</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">int</span> t0=L/mp[xx][cy].v;</span><br><span class="line">                        <span class="keyword">int</span> dt=next.g-t0;</span><br><span class="line">                        <span class="keyword">if</span>(dt&gt;=<span class="number">0</span>&amp;&amp;(dt%mp[xx][cy].t==<span class="number">0</span>)) flag=<span class="literal">true</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(flag) <span class="keyword">continue</span>;</span><br><span class="line">            next.x=xx;</span><br><span class="line">            next.y=yy;</span><br><span class="line">            next.h=get_h(xx,yy);</span><br><span class="line">            <span class="keyword">if</span>((next.g+next.h)&gt;d) <span class="keyword">continue</span>;</span><br><span class="line">            pq.push(next);</span><br><span class="line">            vis[xx][yy][next.g]=<span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> LOCAL</span></span><br><span class="line">    freopen(<span class="string">"data.in"</span>,<span class="string">"r"</span>,<span class="built_in">stdin</span>);</span><br><span class="line">    freopen(<span class="string">"data.out"</span>,<span class="string">"w"</span>,<span class="built_in">stdout</span>);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">"%d%d%d%d"</span>,&amp;m,&amp;n,&amp;k,&amp;d)==<span class="number">4</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        init();</span><br><span class="line">        <span class="keyword">char</span> c;</span><br><span class="line">        <span class="keyword">int</span> t,v,x,y;</span><br><span class="line">        getchar();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> kk=<span class="number">0</span>;kk&lt;k;kk++)</span><br><span class="line">        &#123;</span><br><span class="line">            c=getchar();</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%d%d%d%d"</span>,&amp;t,&amp;v,&amp;x,&amp;y);</span><br><span class="line">            getchar();</span><br><span class="line">            mp[x][y].c=c;</span><br><span class="line">            mp[x][y].t=t;</span><br><span class="line">            mp[x][y].v=v;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> ret=astar();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(ret==<span class="number">-1</span>) <span class="built_in">printf</span>(<span class="string">"Bad luck!\n"</span>);</span><br><span class="line">        <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,ret);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">A*</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">IDA*</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://w12379564.github.io/2017/12/30/HDU-3533-Escape-A/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2017/12/30/HDU-1560-DNA-sequence-IDA/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          HDU 1560 DNA sequence(IDA*)
-        
-      </div>
-    </a>
   
   
-    <a href="/2017/12/30/HDU-3567-Eight-II-双向BFS/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">HDU 3567 Eight II(双向BFS)</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -329,9 +225,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
