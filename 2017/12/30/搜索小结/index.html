@@ -6,14 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://w12379564.github.io">
-  <title>Archives | 未来机械研究所</title>
+  <title>搜索小结 | 未来机械研究所</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="未来机械研究所">
-<meta property="og:url" content="https://w12379564.github.io/archives/index.html">
+  <meta name="description" content="搜索也写了两个专题了，总结一下。">
+<meta name="keywords" content="小结,搜索">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搜索小结">
+<meta property="og:url" content="https://w12379564.github.io/2017/12/30/搜索小结/index.html">
 <meta property="og:site_name" content="未来机械研究所">
+<meta property="og:description" content="搜索也写了两个专题了，总结一下。">
+<meta property="og:updated_time" content="2017-12-30T14:18:08.823Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="未来机械研究所">
+<meta name="twitter:title" content="搜索小结">
+<meta name="twitter:description" content="搜索也写了两个专题了，总结一下。">
   
     <link rel="alternative" href="/atom.xml" title="未来机械研究所" type="application/atom+xml">
   
@@ -149,36 +154,56 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-搜索小结" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/30/搜索小结/" class="archive-article-date">
-  	<time datetime="2017-12-30T13:28:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-30</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/30/搜索小结/">搜索小结</a>
+    <h1 class="article-title" itemprop="name">
+      搜索小结
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/12/30/搜索小结/" class="archive-article-date">
+  	<time datetime="2017-12-30T13:28:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>搜索也写了两个专题了，总结一下。<br><a id="more"></a></p>
+<p>搜索可以概括为寻找从<strong>一个状态</strong>转换到<strong>另一个状态</strong>的<strong>路径</strong>。</p>
+<p>因此重点包括但不限于：</p>
+<ol>
+<li>状态表示：问题的模型多样，如何将原问题的状态用程序语言和数据结构表示出来，以图的角度来看，状态就是图中的一个个节点；</li>
+<li>状态转换：问题的不同状态之间转换是如何进行的，从图的角度来看，即从一个节点到相邻节点的路径是什么，相邻节点有哪些；</li>
+<li>状态保存和判重：如何保存已经经历过的状态，如何判断是否出现过；以图的角度来看，就是如何判断一个节点已经访问过；</li>
+<li>路径保存：如何保存路径，保存状态转换的过程；</li>
+<li>剪枝：如何避开不可行的路径。</li>
+</ol>
+<p>逐条分析如下：</p>
+<p><strong>1.状态表示：</strong>如果本身是图模型，则无需另行寻找表示方式；如果是其他问题，要把问题的状态抽象成图的节点，状态的特征变为唯一标识该节点的标记，就如图模型中节点编号唯一标识一个节点一样。</p>
+<p>常见的状态例子有面板/矩阵，数组等，例如八数码问题<a href="https://w12379564.github.io/2017/12/29/HDU-1043-Eight-BFS/">Eight</a>、<a href="https://w12379564.github.io/2017/12/30/HDU-3567-Eight-II-%E5%8F%8C%E5%90%91BFS/">Eight II</a>是面板，<a href="https://vjudge.net/problem/ZOJ-2477" target="_blank" rel="noopener">Magic Cube</a>是三维模型用二维面板表示，<a href="https://w12379564.github.io/2017/12/30/HDU-1560-DNA-sequence-IDA/">DNA sequence</a>、<a href="https://vjudge.net/problem/POJ-3126" target="_blank" rel="noopener">Prime Path</a>是序列形式等，这些状态都有一个特征，就是可以简单的序列化，或是本身就是序列，或是按照一个顺序展开就是序列，序列化后就可以得到一个唯一标识状态的特征，序列可以简单的转换成数组或者string形式，数组（vector形式）或者字符串就可以作为状态的表示形式，因为这两者能够比较容易的根据原问题转换出来，并且vector能作为set的值/map的key，string可以作为unordered_set/unordered_map的值/key，因此保存和判重也都比较方便。</p>
+<p>但是很多时候直接使用数组和字符串表示状态存在空间和效率上的问题，这是就考虑将状态表示成一个数字，例如全排列的康托展开<a href="https://w12379564.github.io/2017/12/29/HDU-1043-Eight-BFS/">Eight</a>、<a href="https://w12379564.github.io/2017/12/30/HDU-3567-Eight-II-%E5%8F%8C%E5%90%91BFS/">Eight II</a>，或者更一般的hash算法<a href="https://w12379564.github.io/2017/12/30/HDU-1067-Gap/">Gap</a>。</p>
+<p><strong>2.状态转换：</strong>状态转换就是题干的核心，不同类型的问题中状态发生变化的方式就是描述重点，毕竟世界的本质是运动（罗哲：事物的本质是静止），如面板的元素变换位置，序列元素变换位置，或者序列增加长度等等，这些变化就相当于图中的路径，经由这些变化从一个节点移动到相邻节点。</p>
+<p>状态转换过程中，涉及新老状态的转换，从一个状态转换到新状态，通常需要用到旧状态的信息，理论上，状态表示时对应的序列化或者数字能够唯一的表示状态，就含有这个状态的全部信息，但是很多时候从标识反推状态是很困难的，因此需要把原状态也保存起来，这就是为什么经常需要构造结构体来保存信息，例如坐标、序列、面板等。</p>
+<p>广度搜索中通常将原状态保存在队列里，深度搜索中一般将原状态通过参数向下传递。</p>
+<p><strong>3.状态保存和判重：</strong>上述已提到状态保存经常需要保存完整信息，但是判重能够利用的手段更少，因为判重受到数据结构的限制，能够用于判重的数据结构一般有数组（限制了状态要用数字表示，限制了范围）、unordered_set/unordered_map（只能是int,string等简单类型、set/map(简单类型和vector，存取效率是对数)，因此状态一定要能表示成上述形式，才方便判重，同时判重可能占用巨大的空间，通常来说，只有BFS/A*算法需要判重，DFS/IDA*可以不用，因此当判重的代价很大时，考虑使用不判重的算法，如<a href="https://w12379564.github.io/2017/12/30/HDU-1560-DNA-sequence-IDA/">DNA sequence</a>。</p>
+<p><strong>4.路径保存：</strong>需要输出路径的时候，需要保存路径。</p>
+<p>广度算法同时维护多条路径，因此或是使用大量空间保存到达每一个节点的路径，或者在状态节点中增加指向之前节点的指针，将路径组织成链式，然后输出时倒序复现。</p>
+<p>深度算法一次只维护一条路径，因此可以用一个变量记录（如果方便），并在找到终点后将该变量赋予全局变量保存；若路径表示复杂，不好用一个变量记录，亦可使用指向前一节点的指针记录和倒序复现。</p>
+<p><strong>5.剪枝：</strong>启发式算法中自带剪枝，利用估计距离和目标的关系来剪枝或者排序，其余的剪枝情况需要具体问题具体分析，比如剪去状态没有变化/导向已有状态的分支，以图的观点来看就是剪去环。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -194,388 +219,105 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://w12379564.github.io/2017/12/30/搜索小结/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/30/HDU-1067-Gap/" class="archive-article-date">
-  	<time datetime="2017-12-30T12:12:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-30</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/12/30/HDU-1067-Gap/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">HDU 1067 Gap</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/30/HDU-1067-Gap/">HDU 1067 Gap</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">BFS</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Hash</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/30/HDU-3058-Nightmare-Ⅱ-BFS/" class="archive-article-date">
-  	<time datetime="2017-12-30T12:00:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/30/HDU-3058-Nightmare-Ⅱ-BFS/">HDU 3058 Nightmare II(BFS)</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">BFS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/30/Leetcode-754-Cracking-the-Safe/" class="archive-article-date">
-  	<time datetime="2017-12-30T11:19:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/30/Leetcode-754-Cracking-the-Safe/">Leetcode 754 Cracking the Safe(IDA*)</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">IDA*</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/30/HDU-1560-DNA-sequence-IDA/" class="archive-article-date">
-  	<time datetime="2017-12-30T09:13:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/30/HDU-1560-DNA-sequence-IDA/">HDU 1560 DNA sequence(IDA*)</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">IDA*</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/30/HDU-3533-Escape-A/" class="archive-article-date">
-  	<time datetime="2017-12-30T08:53:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/30/HDU-3533-Escape-A/">HDU 3533 Escape(A*)</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">A*</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/30/HDU-3567-Eight-II-双向BFS/" class="archive-article-date">
-  	<time datetime="2017-12-30T08:24:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/30/HDU-3567-Eight-II-双向BFS/">HDU 3567 Eight II(双向BFS)</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">双向BFS</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">康托展开</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/29/HDU-1043-Eight-BFS/" class="archive-article-date">
-  	<time datetime="2017-12-29T11:26:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/29/HDU-1043-Eight-BFS/">HDU 1043 Eight(搜索，多解)</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">BFS</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">双向BFS</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">A*</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">康托展开</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/29/POJ-2912-Rochambeau-并查集-枚举/" class="archive-article-date">
-  	<time datetime="2017-12-29T11:09:40.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/29/POJ-2912-Rochambeau-并查集-枚举/">POJ 2912 Rochambeau(并查集+枚举)</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">并查集</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">枚举</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/12/29/POJ-1182-食物链-并查集/" class="archive-article-date">
-  	<time datetime="2017-12-29T10:55:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/12/29/POJ-1182-食物链-并查集/">POJ 1182 食物链(并查集)</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">并查集</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
   
 
 
@@ -599,8 +341,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
