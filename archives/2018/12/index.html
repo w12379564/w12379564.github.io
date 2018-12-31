@@ -6,19 +6,14 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://w12379564.github.io">
-  <title>HDU 3567 Eight II(双向BFS) | 未来机械研究所</title>
+  <title>Archives: 2018/12 | 未来机械研究所</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="双向BFS，输出最小字典序的路径，和上一题的双向BFS相比，最大的问题在于反向的BFS不能简单的保证字典序，正向的话，只要优先搜索字典序小的方向就能得到字典序，但反向不行，例如反向先搜d，可能最后得到路径u…d，先搜u可能得到d….u，也就是由于反过来搜，不能保证之后搜到的路径一定是字典序小的。">
-<meta name="keywords" content="双向BFS,康托展开">
-<meta property="og:type" content="article">
-<meta property="og:title" content="HDU 3567 Eight II(双向BFS)">
-<meta property="og:url" content="https://w12379564.github.io/2017/12/30/HDU-3567-Eight-II-双向BFS/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="未来机械研究所">
+<meta property="og:url" content="https://w12379564.github.io/archives/2018/12/index.html">
 <meta property="og:site_name" content="未来机械研究所">
-<meta property="og:description" content="双向BFS，输出最小字典序的路径，和上一题的双向BFS相比，最大的问题在于反向的BFS不能简单的保证字典序，正向的话，只要优先搜索字典序小的方向就能得到字典序，但反向不行，例如反向先搜d，可能最后得到路径u…d，先搜u可能得到d….u，也就是由于反过来搜，不能保证之后搜到的路径一定是字典序小的。">
-<meta property="og:updated_time" content="2017-12-30T08:40:30.414Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HDU 3567 Eight II(双向BFS)">
-<meta name="twitter:description" content="双向BFS，输出最小字典序的路径，和上一题的双向BFS相比，最大的问题在于反向的BFS不能简单的保证字典序，正向的话，只要优先搜索字典序小的方向就能得到字典序，但反向不行，例如反向先搜d，可能最后得到路径u…d，先搜u可能得到d….u，也就是由于反过来搜，不能保证之后搜到的路径一定是字典序小的。">
+<meta name="twitter:title" content="未来机械研究所">
   
     <link rel="alternative" href="/atom.xml" title="未来机械研究所" type="application/atom+xml">
   
@@ -154,163 +149,60 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-HDU-3567-Eight-II-双向BFS" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      HDU 3567 Eight II(双向BFS)
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2018" class="archive-year">2018</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2018/12/31/2018年终总结/" class="archive-article-date">
+  	<time datetime="2018-12-31T03:25:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-31</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2018/12/31/2018年终总结/">2018年终总结</a>
     </h1>
   
 
-        
-        <a href="/2017/12/30/HDU-3567-Eight-II-双向BFS/" class="archive-article-date">
-  	<time datetime="2017-12-30T08:24:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-12-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>双向BFS，输出最小字典序的路径，和<a href="https://w12379564.github.io/2017/12/29/HDU-1043-Eight-BFS/">上一题</a>的双向BFS相比，最大的问题在于反向的BFS不能简单的保证字典序，正向的话，只要优先搜索字典序小的方向就能得到字典序，但反向不行，例如反向先搜d，可能最后得到路径u…d，先搜u可能得到d….u，也就是由于反过来搜，不能保证之后搜到的路径一定是字典序小的。<br><a id="more"></a></p>
-<p>解决方法，反向搜到完整路径（即和正向相遇）时不返回，所有的返回都由正向的BFS来决定，同时反向的路径要更新，在同一层次（长度）路径中，对于反向能到达同一个点的路径，保存其字典序最小者，因为不能通过搜索方向就简单得到最小值，所以要比较，利用字符串的比较就可以实现。</p>
-<p>双向BFS一个共性问题就是vis的标记，由于双向访问，因此不能简单的用bool标记为访问过和未访问过，vis要使用int型，用来标记是哪一个方向访问过，当相遇时即可返回。</p>
-<p>本题用数组保存string路径不会爆内存，但是用map会超时。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;memory.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> fac[<span class="number">10</span>]=&#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">6</span>,<span class="number">24</span>,<span class="number">120</span>,<span class="number">720</span>,<span class="number">5040</span>,<span class="number">40320</span>,<span class="number">362880</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">cantor</span><span class="params">(<span class="keyword">int</span> a[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> ret=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">9</span>;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> cnt=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=i+<span class="number">1</span>;j&lt;<span class="number">9</span>;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(a[i]&gt;a[j]) cnt++;</span><br><span class="line">        &#125;</span><br><span class="line">        ret+=cnt*fac[<span class="number">9</span>-i<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ret+<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="keyword">int</span> idx;</span><br><span class="line">    <span class="keyword">int</span> pos;</span><br><span class="line">    <span class="keyword">int</span> d[<span class="number">9</span>];</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> vis[<span class="number">362885</span>];</span><br><span class="line"><span class="built_in">string</span> path[<span class="number">362885</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> dx[<span class="number">4</span>]=&#123;<span class="number">0</span>,<span class="number">-1</span>,<span class="number">1</span>,<span class="number">0</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> dy[<span class="number">4</span>]=&#123;<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">-1</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> dx2[<span class="number">4</span>]=&#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">-1</span>,<span class="number">0</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> dy2[<span class="number">4</span>]=&#123;<span class="number">-1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> dir1[<span class="number">5</span>]=<span class="string">"dlru"</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">bfs</span><span class="params">(node A,node B)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(A.idx==B.idx) <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">    <span class="built_in">queue</span>&lt;node&gt; q1;</span><br><span class="line">    <span class="built_in">queue</span>&lt;node&gt; q2;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">memset</span>(vis,<span class="number">0</span>,<span class="keyword">sizeof</span> vis);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    q1.push(A);</span><br><span class="line">    vis[A.idx]=<span class="number">1</span>;</span><br><span class="line">    path[A.idx]=<span class="string">""</span>;</span><br><span class="line">    q2.push(B);</span><br><span class="line">    vis[B.idx]=<span class="number">2</span>;</span><br><span class="line">    path[B.idx]=<span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(!q1.empty()&amp;&amp;!q2.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> qs1=q1.size();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;qs1;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            node cur=q1.front();</span><br><span class="line">            q1.pop();</span><br><span class="line">            <span class="keyword">int</span> x=cur.pos%<span class="number">3</span>;</span><br><span class="line">            <span class="keyword">int</span> y=cur.pos/<span class="number">3</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">4</span>;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">int</span> xx=x+dx[j];</span><br><span class="line">                <span class="keyword">int</span> yy=y+dy[j];</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span>(xx&gt;=<span class="number">0</span>&amp;&amp;xx&lt;<span class="number">3</span>&amp;&amp;yy&gt;=<span class="number">0</span>&amp;&amp;yy&lt;<span class="number">3</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    node n=cur;</span><br><span class="line">                    n.pos=yy*<span class="number">3</span>+xx;</span><br><span class="line">                    swap(n.d[cur.pos],n.d[n.pos]);</span><br><span class="line">                    n.idx=cantor(n.d);</span><br><span class="line">                    <span class="built_in">string</span> p=path[cur.idx]+dir1[j];</span><br><span class="line">                    <span class="keyword">if</span>(vis[n.idx]==<span class="number">2</span>) <span class="keyword">return</span> p+path[n.idx];</span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(vis[n.idx]==<span class="number">0</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        vis[n.idx]=<span class="number">1</span>;</span><br><span class="line">                        path[n.idx]=p;</span><br><span class="line">                        q1.push(n);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> qs2=q2.size();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;qs2;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            node cur=q2.front();</span><br><span class="line">            q2.pop();</span><br><span class="line">            <span class="keyword">int</span> x=cur.pos%<span class="number">3</span>;</span><br><span class="line">            <span class="keyword">int</span> y=cur.pos/<span class="number">3</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">4</span>;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">int</span> xx=x+dx2[j];</span><br><span class="line">                <span class="keyword">int</span> yy=y+dy2[j];</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span>(xx&gt;=<span class="number">0</span>&amp;&amp;xx&lt;<span class="number">3</span>&amp;&amp;yy&gt;=<span class="number">0</span>&amp;&amp;yy&lt;<span class="number">3</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    node n=cur;</span><br><span class="line">                    n.pos=yy*<span class="number">3</span>+xx;</span><br><span class="line">                    swap(n.d[cur.pos],n.d[n.pos]);</span><br><span class="line">                    n.idx=cantor(n.d);</span><br><span class="line">                    <span class="built_in">string</span> p=dir1[j]+path[cur.idx];</span><br><span class="line">                    <span class="keyword">if</span>(vis[n.idx]==<span class="number">0</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        vis[n.idx]=<span class="number">2</span>;</span><br><span class="line">                        path[n.idx]=p;</span><br><span class="line">                        q2.push(n);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span> <span class="keyword">if</span>(vis[n.idx]==<span class="number">2</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="keyword">if</span>(p&lt;path[n.idx]) path[n.idx]=p;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">"unsolvable"</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> LOCAL</span></span><br><span class="line">    freopen(<span class="string">"data.in"</span>,<span class="string">"r"</span>,<span class="built_in">stdin</span>);</span><br><span class="line">    freopen(<span class="string">"data.out"</span>,<span class="string">"w"</span>,<span class="built_in">stdout</span>);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> T;</span><br><span class="line">    <span class="keyword">char</span> a[<span class="number">10</span>],b[<span class="number">10</span>];</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;T);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> t=<span class="number">1</span>;t&lt;=T;t++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%s%s"</span>,a,b);</span><br><span class="line">        node A,B;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">9</span>;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(a[i]==<span class="string">'X'</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                A.d[i]=<span class="number">9</span>;</span><br><span class="line">                A.pos=i;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> A.d[i]=a[i]-<span class="string">'0'</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(b[i]==<span class="string">'X'</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                B.d[i]=<span class="number">9</span>;</span><br><span class="line">                B.pos=i;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> B.d[i]=b[i]-<span class="string">'0'</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        A.idx=cantor(A.d);</span><br><span class="line">        B.idx=cantor(B.d);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">string</span> ret=bfs(A,B);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Case %d: %d\n"</span>,t,ret.size());</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;ret&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">双向BFS</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">康托展开</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">杂</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://w12379564.github.io/2017/12/30/HDU-3567-Eight-II-双向BFS/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2017/12/30/HDU-3533-Escape-A/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          HDU 3533 Escape(A*)
-        
-      </div>
-    </a>
   
   
-    <a href="/2017/12/29/HDU-1043-Eight-BFS/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">HDU 1043 Eight(搜索，多解)</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -333,8 +225,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
